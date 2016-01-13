@@ -48,7 +48,12 @@
 	<header>
 		<nav>
 			<ul>
-				<li>Your menu</li>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
+				<li></li>
 			</ul>
 		</nav>
 	</header>

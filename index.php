@@ -6,12 +6,17 @@
 	 |->js[_] // create your plugin js file
  -->
 
-<html>
+<html lang="pl">
 
 <head>
 
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta name="description" content="Content description"/>
+	<meta name="keywords" content="keyword1, keyword2" />
+	<meta http-equiv="content-language" content="pl" />
+
 	<title>NEW PROJECT</title>
+
 
 	<!-- jQuery UI CSS CDA, Google fonts CDA - Open Sans, Reset CDA -->
 		<link rel="stylesheet" type="text/css" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
@@ -24,13 +29,15 @@
 	<!-- X -->
 	
 	<!-- CLIENT SIDE LESS CDN + CUSTOM LESS FILE -->
+		<link rel="stylesheet/less" type="text/css" href="less/compiled.less"/>
 		<script src="js/less.js"></script>
-		<link rel="stylesheet/less" type="text/css" href="src/css/less/compiled.less"/>
 	<!-- X -->
 
 	<style>
 		body{
 			font-family: 'Open Sans', sans-serif;
+			font-size: 120%;
+			line-height: 120%;
 		}
 	</style>
 
@@ -49,11 +56,34 @@
 	<section>
 	
 		<article>
-			<header>
+			
+			<header>	
 				<h2>Article title</h2>
 				<p>Posted on <time datetime="2009-09-04T16:31:24+02:00">September 4th 2009</time> by <a href="#">Writer</a> - <a href="#comments">6 comments</a></p>
 			</header>
-			<p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.</p>
+			<div class="row">
+				<div class="box1 grid-xs-1-5">
+					<h1>Hello From Grid</h1>
+					<p>Great to be here</p>
+				</div>
+				<div class="box2 grid-xs-1-5">
+					<h1>Hello From Grid</h1>
+					<p>Great to be here</p>
+				</div>
+				<div class="box3 grid-xs-1-5">
+					<h1>Hello From Grid</h1>
+					<p>Great to be here</p>
+				</div>
+				<div class="box4 grid-xs-1-5">
+					<h1>Hello From Grid</h1>
+					<p>Great to be here</p>
+				</div>
+				<div class="box5 grid-xs-1-5">
+					<h1>Hello From Grid</h1>
+					<p>Great to be here</p>
+				</div>
+			</div>
+							
 		</article>
 		
 		<article>
@@ -69,6 +99,7 @@
 	<aside>
 		<h2>About section</h2>
 		<p>Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo.</p>
+		<?php include('form.php'); ?>
 	</aside>
 
 	<footer>

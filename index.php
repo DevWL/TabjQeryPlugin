@@ -29,86 +29,107 @@
 	<!-- X -->
 	
 	<!-- CLIENT SIDE LESS CDN + CUSTOM LESS FILE -->
-		<link rel="stylesheet/less" type="text/css" href="less/compiled.less"/>
-		<script src="js/less.js"></script>
+		<!-- <link rel="stylesheet/less" type="text/css" href="less/compiled.less"/> 
+		<script src="js/less.js"></script>  -->
 	<!-- X -->
 
 	<style>
+		*{
+			margin: 0px;
+			padding: 0px;
+			text-decoration: none;
+		}
+		html{
+		    position: relative;
+		    min-height: 100%;
+		}
+		body{
+		}
+
 		body{
 			font-family: 'Open Sans', sans-serif;
 			font-size: 120%;
 			line-height: 120%;
 		}
+/*		section:after, section:before{
+			display: block;
+			content: " ";
+			height: 0px;
+			font-size: 0px;
+			clear: both;
+		}*/
+
+		footer{
+		    position: absolute;
+		    left: 0;
+		    bottom: 0;
+		    height: 100px;
+		    width: 100%;
+		    background-color: gray;
+		}
+		ul{
+			width: 100%;
+		}
+
+		li{
+			float: left;
+			cursor: pointer;
+			width: 16.665%;
+		}
+		li a {
+			box-sizing: border-box;
+			display: block;
+			width: 100%;
+			height: 100px;
+			float: left;
+			text-align: center;
+			padding: 30px;
+			border: 1px solid rgba(0,0,0, 0.1);
+		}
+		.box{
+			box-sizing: border-box;
+			min-height: 400px;
+			width: 100%;
+			background-color: gray;
+			color: white;
+			padding: 20px;
+			float: left;
+			display: none;
+		}
+		.tabActive{
+			background-color: gray;
+			color: white;
+			border-bottom: gray 1px solid;
+		}
+
 	</style>
 
 </head>
 
 <body>
-
-	<header>
-		<nav>
-			<ul>
-				<li></li>
-				<li></li>
-				<li></li>
-				<li></li>
-				<li></li>
-				<li></li>
-			</ul>
-		</nav>
-	</header>
-	
-	<section>
-	
-		<article>
-			
-			<header>	
-				<h2>Article title</h2>
-				<p>Posted on <time datetime="2009-09-04T16:31:24+02:00">September 4th 2009</time> by <a href="#">Writer</a> - <a href="#comments">6 comments</a></p>
-				<p>New paragraph new-feture</p>
-			</header>
-			<div class="row">
-				<div class="box1 grid-xs-1-5">
-					<h1>Hello From Grid</h1>
-					<p>Great to be here</p>
-				</div>
-				<div class="box2 grid-xs-1-5">
-					<h1>Hello From Grid</h1>
-					<p>Great to be here</p>
-				</div>
-				<div class="box3 grid-xs-1-5">
-					<h1>Hello From Grid</h1>
-					<p>Great to be here</p>
-				</div>
-				<div class="box4 grid-xs-1-5">
-					<h1>Hello From Grid</h1>
-					<p>Great to be here</p>
-				</div>
-				<div class="box5 grid-xs-1-5">
-					<h1>Hello From Grid</h1>
-					<p>Great to be here</p>
-				</div>
-			</div>
-							
-		</article>
+	<div class="content">
+		<header>
+			<nav>
+				<ul>
+					<li><a  class="button active" target="#box1"> - click - </a></li>
+					<li><a target="#box2"> - click - </a></li>
+					<li><a target="#box3"> - click - </a></li>
+					<li><a target="#box4"> - click - </a></li>
+					<li><a target="#box5"> - click - </a></li>
+					<li><a target="#box6"> - click - </a></li>
+				</ul>
+			</nav>
+		</header>
 		
-		<article>
-			<header>
-				<h2>Article title</h2>
-				<p>master again new-feture is 4 commits ahead</p>
-				<p>Posted on <time datetime="2009-09-04T16:31:24+02:00">September 4th 2009</time> by <a href="#">Writer</a> - <a href="#comments">6 comments</a></p>
-			</header>
-			<p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.</p>
-		</article>
-		
-	</section>
-
-	<aside>
-		<h2>About section</h2>
-		<p>Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo.</p>
-		<?php include('form.php'); ?>
-	</aside>
-
+		<section>
+			<div class="box" id="box1">box1</div>
+			<div class="box" id="box2">box2</div>
+			<div class="box" id="box3">box3</div>
+			<div class="box" id="box4">box4</div>
+			<div class="box" id="box5">box5</div>
+			<div class="box" id="box6">box6</div>
+		</section>
+	</div>
 	<footer>
 		<p>Copyright 2009 Your name</p>
 	</footer>
@@ -117,7 +138,196 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
 <!-- <script src="js/plugins.js"></script> CREATE -->
+<script>
 
+//jQuery plugin Templet
+(function($){
+	$.myPlugin = function(options) { //or use "$.fn.myPlugin" or "$.myPlugin" to call it globaly directly from $.myPlugin();
+	  	var defaults = {
+	  		target: "div.box", // select all div.box
+	  		buttonAttrName: "target", // attr that contin div tab box id np #box1
+	  		buttons: "ul li a", // select all buttons
+	  		activeClassName: "tabActive", //class to added to active button
+	  		delayAfterClick: 0, // wait this time before fade
+	  		fadeSpeed: 500, // fade with this speed
+	  		showDefault: 2, // tab number be activated when loaded / false - no tab on load
+	  		allowNone: true, // allow closing tabs when clicked seckound time on same button	 
+	  		autoPlay: true, // autoplay tabs
+	  		speedPlay: 3500, // time for col to fade
+	  		onClickStopPlay: true, // [true|false] When tabs chenge onclick stop auto play
+	  		resumePlayAfter: 5000, //[3000] after stoping wait this amount of time (3s) and start to play again
+
+	  	};
+
+	  	options = $.extend(defaults, options);
+
+	  	function logic(){
+	  		var objectClicked1;
+	  		var objectClicked2;
+	  		var objectClickTemp;
+	  		var loadFirstTime = true;
+	  		var interval;
+	  		var curentTabIterator = 0;
+	  		if(options.showDefault !== false) curentTabIterator = options.showDefault;
+
+  			function toogleClass(button, classname){
+  				$(options.buttons).removeClass(classname);
+  				button.toggleClass(classname);
+  				console.log(classname);
+  				if(!state) button.toggleClass(classname);
+  			}
+
+  			function autoPlay(button, classname, box){ // return interval varible
+  				if(options.autoPlay === true){
+	  				interval = setInterval(function(){
+		  				var tabsCount = $(options.buttons).length; // count numbers of all tabs
+
+	  					if(curentTabIterator > tabsCount - 1){ //reset to 0 if over the number of all tabs
+	  						curentTabIterator = 0;
+	  					}
+
+  						$(options.target).hide(0);
+  						var active_button_interval =  $(options.buttons).eq(curentTabIterator);
+  						toogleClass(active_button_interval, options.activeClassName);
+  						$(options.target).eq(curentTabIterator).delay(options.delayAfterClick).fadeIn(options.fadeSpeed);
+  						state = true;
+
+	  					console.log(curentTabIterator);
+
+	  					curentTabIterator++;
+	  				}, options.speedPlay);
+  					return interval;
+  				}
+  				
+  			}
+
+  			interator = autoPlay();
+
+  			function stopPlay(){
+  				clearInterval(interval);
+  			}
+
+  			function resumePlayAfter(){
+				setTimeout(function(){
+					stopPlay();
+					interator = autoPlay();
+				}, options.resumePlayAfter);
+  			}
+
+
+	  		$(options.target).hide(0); //hide all boxes
+	  		if(options.showDefault !== false && loadFirstTime === true){ //run only once and and only if default tab is activated
+	  			loadFirstTime = false; // change status
+		  		var showDefault = $(options.target).eq(options.showDefault-1); //select default div to show
+		  		showDefault.fadeIn(options.fadeSpeed); //show default div with fadeInEffect
+		  		var defaultButton = $(options.buttons).eq(options.showDefault-1);
+		  		var startingAttr = $(options.buttons).eq(options.showDefault-1).attr(options.buttonAttrName); //select default tag name to show
+		  	    var	objectClicked1 = startingAttr; // first selected and marked as clicked once button
+		  		var state = true; // change status
+		  		toogleClass(defaultButton, options.activeClassName);
+	  		}else{
+	  			var state = false; // change status
+	  		}
+
+	  		
+// if(objectClicked1 == objectClicked2){ console.log(objectClicked1+"==="+objectClicked2 +" and state is: " + state); }else{ console.log(objectClicked1+"!=="+objectClicked2 +" and state is: " + state); }
+
+	  		$(options.buttons).on('click mouseenter', function(){
+	  			if(options.onClickStopPlay){
+	  				stopPlay(); // onclick stop auto play;	
+	  				if(options.resumeAfter !== false) resumePlayAfter(); // onclick stop auto play;
+	  			}
+	  			
+	  			var button = $(this); //clicked element
+	  			curentTabIterator = $(options.buttons).index(this) + 1; //onclick reset interval iterator position
+	  			if(objectClicked1 != undefined){ objectClickTemp = objectClicked1 };
+	  			$(options.target).hide(0); //hide div 
+	  			var object = $(this).attr(options.buttonAttrName);
+	  			if(objectClicked1 === undefined){
+	  				objectClicked1 = $(this).attr(options.buttonAttrName);
+	  				objectClicked2 = $(this).attr(options.buttonAttrName);
+	  			}else if(objectClickTemp === undefined){
+	  				objectClicked1 = $(this).attr(options.buttonAttrName);
+	  				objectClicked2 = objectClicked1;
+	  			}else{
+	  				objectClicked1 = $(this).attr(options.buttonAttrName);
+	  				objectClicked2 = objectClickTemp;
+	  			}
+
+	  			if(!options.allowNone){
+  					$(object).delay(options.delayAfterClick).fadeIn(options.fadeSpeed);
+  					state = true;
+  				}else{
+  					if(!state && objectClicked1 === objectClicked2){
+  						$(options.target).hide(0);
+  						$(object).delay(options.delayAfterClick).fadeIn(options.fadeSpeed);
+  						state = true;
+	  					toogleClass(button, options.activeClassName);
+  					}else if(state && objectClicked1 === objectClicked2){
+  						$(object).delay(options.delayAfterClick).fadeOut(options.fadeSpeed);
+  						state = false;
+  						toogleClass(button, options.activeClassName);
+  					}else if(state && objectClicked1 !== objectClicked2){
+  						$(options.target).hide(0);
+  						$(object).delay(options.delayAfterClick).fadeIn(options.fadeSpeed);
+  						state = true;
+  						toogleClass(button, options.activeClassName);
+  					}else if(!state && objectClicked1 !== objectClicked2){
+  						$(options.target).hide(0);
+  						$(object).delay(options.delayAfterClick).fadeIn(options.fadeSpeed);
+  						state = true;
+  						toogleClass(button, options.activeClassName);
+  					}
+  					
+  				}
+
+// if(objectClicked1 == objectClicked2){ console.log(objectClicked1+"==="+objectClicked2 +" and state is: " + state); }else{ console.log(objectClicked1+"!=="+objectClicked2 +" and state is: " + state); }
+  			
+	  		});
+	  		//... code goes here
+	  	}
+
+		//DEFINE WHEN TO RUN FUNCTION
+		// $(window).on('load resize', function () {
+		// 	logic();
+		// });
+
+		jQuery(document).ready(function($) {
+			logic();
+		});
+		// RETURN OBJECT FOR CHAINING
+	    // return this.each(function() {
+	    //   this.checked = true;
+	    // });
+
+		// return this;
+	};
+})(jQuery);
+
+
+// USE EXAMPLE
+var options = {
+	  		target: "div.box", // select all div.box
+	  		buttonAttrName: "target", // attr that contin div tab box id np #box1
+	  		buttons: "ul li a", // select all buttons
+	  		activeClassName: "tabActive", //class to added to active button
+	  		delayAfterClick: 0, // wait this time before fade
+	  		fadeSpeed: 100, // fade with this speed
+	  		showDefault: 2, // tab number be activated when loaded / false - no tab on load
+	  		allowNone: true, // allow closing tabs when clicked seckound time on same button	 
+	  		autoPlay: true, // autoplay tabs
+	  		speedPlay: 4500, // time for col to fade
+	  		onClickStopPlay: true, // [true|false] When tabs chenge onclick stop auto play
+	  		resumePlayAfter: 8000, //[3000] after stoping wait this amount of time (3s) and start to play again
+}
+
+$.myPlugin(options); // or run plugin with default settings like so: $.myPlugin(options);
+
+// HTML EXAMPLE
+// <li><a target="#box1"> - click - </a></li>
+// <div class="box" id="box1">box1</div>
+
+</script>
 </body>
 
 </html>

@@ -3,7 +3,7 @@ Fully fetured jQuery Tab Plugin. (v1.3 Beta)
 
 Demo available at : http://codepen.io/GlupiJas/pen/GoyEBg
 
-
+```
 // USE EXAMPLE
 var options = {
 	  		mainWrapper: "#tabWraper",
@@ -24,3 +24,4 @@ var options = {
 }
 
 $.myPlugin(options); // or run plugin with default settings like so: $.myPlugin(); but then remember to keep with the html and css structure as in the demo
+```

@@ -18,7 +18,6 @@
 	<div class="content">
 		<header>
 			<nav>
-				NAV CONTENT
 			</nav>
 		</header>
 		

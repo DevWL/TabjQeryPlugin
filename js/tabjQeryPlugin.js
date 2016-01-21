@@ -1,4 +1,4 @@
-//jQuery plugin Templet
+//jQuery plugin tabster
 (function($){
 	$.tabjQeryPlugin = function(options) { //or use "$.fn.myPlugin" or "$.myPlugin" to call it globaly directly from $.myPlugin();
 	  	var defaults = {

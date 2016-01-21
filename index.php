@@ -78,6 +78,7 @@
 		}
 
 		#tabWraper ul{
+			list-style-type: none;
 			width: 100%;
 		}
 
@@ -440,7 +441,7 @@ $.myPlugin(options); // or run plugin with default settings like so: $.myPlugin(
 
 // USE EXAMPLE
 var options = {
-	  		mainWrapper: "#tabWraper",
+	  		mainWrapper: "#tabWraper", // just a main div wrapper
 	  		target: "div.box", // select all div.box
 	  		buttons: "ul li a", // select all buttons
 	  		buttonAttrName: "target", // attr that contin div tab box id np #box1

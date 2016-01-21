@@ -1,0 +1,216 @@
+//jQuery plugin Templet
+(function($){
+	$.tabjQeryPlugin = function(options) { //or use "$.fn.myPlugin" or "$.myPlugin" to call it globaly directly from $.myPlugin();
+	  	var defaults = {
+	  		mainWrapper: "#tabWraper",
+	  		target: "div.box", // select all div.box
+	  		buttons: "ul li a", // select all buttons
+	  		buttonAttrName: "target", // attr that contin div tab box id np #box1
+	  		activeClassName: "tabActive", //class to added to active button
+	  		delayAfterClick: 0, // wait this time before fade
+	  		fadeSpeed: 0, // fade with this speed
+	  		showDefault: 1, // tab number be activated when loaded / false - no tab on load
+	  		allowNone: false, // allow closing tabs when clicked seckound time on same button	 
+	  		autoPlay: true, // autoplay tabs
+	  		speedPlay: 3500, // time for col to fade
+	  		onClickStopPlay: true, // [true|false] When tabs chenge onclick stop auto play
+	  		resumePlayAfter: 3500, //[3000] after stoping wait this amount of time (3s) and start to play again
+	  		onContentHoverPause: true, // When hover on content will stop playing
+	  		contentOuterWraper: "#contentOuterWraper", // We might need it to get padding-bot to reaply on to the tab element when allowNone is set to true % (responsive on window resize) not needed for auto or fixed height
+	  		pluginActionOn: 'click mouseenter', // interact with buttons on ... [click | mouseenter | ...]
+	  	};
+
+	  	options = $.extend(defaults, options);
+
+	  	function logic(){
+	  		var objectClicked1;
+	  		var objectClicked2;
+	  		var objectClickTemp;
+	  		var loadFirstTime = true;
+	  		var interval;
+	  		var curentTabIterator = 0;
+	  		var resumeTimeout = "";
+	  		var blockReshowingContentBox = true;
+	  		var contentOuterWraperPaddingBottom = $(options.contentOuterWraper)[0].style.paddingBottom;
+	  		var active_button_interval = "";
+
+	  		if(options.showDefault !== false) curentTabIterator = options.showDefault;
+
+  			function toogleClass(button, classname){
+  				$(options.buttons).removeClass(classname);
+  				button.toggleClass(classname);
+  				// console.log(classname);
+  				if(!state) button.toggleClass(classname);
+  			}
+
+  			function autoPlay(button, classname, box){ // return interval varible
+  				if(options.autoPlay === true){
+	  				interval = setInterval(function(){
+		  				var tabsCount = $(options.buttons).length; // count numbers of all tabs
+		  				objectClickTemp = objectClicked1 = objectClicked1 = $(options.buttons).eq(curentTabIterator).attr(options.buttonAttrName);
+	  					if(curentTabIterator > tabsCount - 1){ //reset to 0 if over the number of all tabs
+	  						curentTabIterator = 0;
+	  					}
+
+	  					if(state === false && options.allowNone === true){
+	  						// it will stop closed tab to show on Autoplay or Resume
+	  						blockReshowingContentBox = true;
+	  					}else{
+	  						// allow to display box;
+	  						blockReshowingContentBox = false;
+	  					}
+
+  						$(options.target).hide(0); // hide all content box
+  						active_button_interval =  $(options.buttons).eq(curentTabIterator); //get curent tab number
+  						toogleClass(active_button_interval, options.activeClassName); // ad remove css class
+
+  						if(blockReshowingContentBox !== false){
+  							state = false;
+  						}else{
+  							$(options.target).eq(curentTabIterator).delay(options.delayAfterClick).fadeIn(options.fadeSpeed);
+  							state = true;
+  						}
+  						
+
+	  					// console.log(curentTabIterator);
+
+	  					curentTabIterator++;
+	  				}, options.speedPlay);
+  					return interval;
+  				}
+  				
+  			}
+
+  			interator = autoPlay();
+
+  			function stopPlay(){
+  				clearTimeout(resumeTimeout);
+  				clearInterval(interval);
+  				// console.log("stop");
+  			}
+
+  			function resumePlayAfter(){
+				resumeTimeout = setTimeout(function(){
+					stopPlay();
+					interator = autoPlay();
+					info = "function start";
+					// console.log(info);	
+				}, options.resumePlayAfter);
+				// console.log("function resumed");
+  			}
+
+
+	  		$(options.target).hide(0); // hide all boxes
+	  		if(options.showDefault !== false && loadFirstTime === true){ // run only once and and only if default tab is activated
+	  			loadFirstTime = false; // change status
+		  		var showDefault = $(options.target).eq(options.showDefault-1); // select default div to show
+		  		showDefault.fadeIn(options.fadeSpeed); //show default div with fadeInEffect
+		  		var defaultButton = $(options.buttons).eq(options.showDefault-1);
+		  		var startingAttr = $(options.buttons).eq(options.showDefault-1).attr(options.buttonAttrName); //select default tag name to show
+		  	    var	objectClicked1 = startingAttr; // first selected and marked as clicked once button
+		  		var state = true; // change status
+		  		toogleClass(defaultButton, options.activeClassName); // reamove from all and add class to curent button
+	  		}else{
+	  			var state = false; // change status
+	  			stopPlay();
+	  		}
+
+	  		
+// if(objectClicked1 == objectClicked2){ console.log(objectClicked1+"==="+objectClicked2 +" and state is: " + state); }else{ console.log(objectClicked1+"!=="+objectClicked2 +" and state is: " + state); }
+
+	  		$(options.buttons).on(options.pluginActionOn, function(){ // ON CLICK OR MOUSE ENTER
+	  			if(options.onClickStopPlay){
+	  				stopPlay(); // onclick stop auto play;	
+	  				if(options.resumeAfter !== false && options.onContentHoverPause !== true){
+	  					resumePlayAfter(); // onclick stop auto play;
+	  				} 
+	  			}
+	  			
+	  			var button = $(this); //clicked element
+	  			curentTabIterator = $(options.buttons).index(this) + 1; //onclick reset interval iterator position
+	  			if(objectClicked1 != undefined){ objectClickTemp = objectClicked1 };
+	  			$(options.target).hide(0); //hide div 
+	  			var object = $(this).attr(options.buttonAttrName);
+	  			if(objectClicked1 === undefined){
+	  				objectClicked1 = $(this).attr(options.buttonAttrName);
+	  				objectClicked2 = $(this).attr(options.buttonAttrName);
+	  			}else if(objectClickTemp === undefined){
+	  				objectClicked1 = $(this).attr(options.buttonAttrName);
+	  				objectClicked2 = objectClicked1;
+	  			}else{
+	  				objectClicked1 = $(this).attr(options.buttonAttrName);
+	  				objectClicked2 = objectClickTemp;
+	  			}
+
+	  			if(!options.allowNone){
+	  				$(options.target).hide(0);
+  					$(object).delay(options.delayAfterClick).fadeIn(options.fadeSpeed);
+  					toogleClass(button, options.activeClassName);
+				    state = true;
+  				}else{
+  					if(!state && objectClicked1 === objectClicked2){
+  						$(options.target).hide(0);
+  						$(object).delay(options.delayAfterClick).fadeIn(options.fadeSpeed);
+  						state = true;
+	  					toogleClass(button, options.activeClassName);
+  					}else if(state && objectClicked1 === objectClicked2){
+  						$(object).delay(options.delayAfterClick).fadeOut(options.fadeSpeed);
+  						state = false;
+  						toogleClass(button, options.activeClassName);
+  					}else if(state && objectClicked1 !== objectClicked2){
+  						$(options.target).hide(0);
+  						$(object).delay(options.delayAfterClick).fadeIn(options.fadeSpeed);
+  						state = true;
+  						toogleClass(button, options.activeClassName);
+  					}else if(!state && objectClicked1 !== objectClicked2){
+  						$(options.target).hide(0);
+  						$(object).delay(options.delayAfterClick).fadeIn(options.fadeSpeed);
+  						state = true;
+  						toogleClass(button, options.activeClassName);
+  					}
+  				}
+  				// function that gets contentouterwraper paddig and removes it if state === false (content box is hidden)  				
+  				function onOffStateRemovePaddingFromContentOuterWraper(){
+  					if(state === true){
+  						$(options.contentOuterWraper).css('padding-bottom', contentOuterWraperPaddingBottom);
+  					}else{  				
+		  				// console.log(contentOuterWraperPaddingBottom);
+		  				$(options.contentOuterWraper).css('padding-bottom', '0px');
+  					}
+  				};
+  				onOffStateRemovePaddingFromContentOuterWraper();
+
+// if(objectClicked1 == objectClicked2){ console.log(objectClicked1+"==="+objectClicked2 +" and state is: " + state); }else{ console.log(objectClicked1+"!=="+objectClicked2 +" and state is: " + state); }
+  			
+	  		});
+
+			if(options.onContentHoverPause){
+				var selection = "\""+options.target + ", " + options.buttons+ "\"";
+				// console.log(selection);
+				$(options.mainWrapper).hover(function(){
+					stopPlay();
+					// console.log("wrap stoped");
+				}, function(){
+					resumePlayAfter();
+					// console.log("wrap resumed");
+				});
+			}
+	  		//... code goes here
+	  	}
+
+		//DEFINE WHEN TO RUN FUNCTION
+		// $(window).on('load resize', function () {
+		// 	logic();
+		// });
+
+		jQuery(document).ready(function($) {
+			logic();
+		});
+		// RETURN OBJECT FOR CHAINING
+	    // return this.each(function() {
+	    //   this.checked = true;
+	    // });
+
+		// return this;
+	};
+})(jQuery);

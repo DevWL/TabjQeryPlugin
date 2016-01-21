@@ -1,0 +1,88 @@
+*{
+	margin: 0px;
+	padding: 0px;
+	text-decoration: none;
+}
+
+html{
+    position: relative;
+    min-height: 100%;
+}
+
+body{
+	font-family: 'Open Sans', sans-serif;
+	font-size: 120%;
+	line-height: 120%;
+}
+
+h1{
+	font-size: 150%;
+	line-height: 150%;
+}
+
+#tabster{
+	width: 100%;
+}
+
+#tabster ul{
+	list-style-type: none;
+	width: 100%;
+}
+
+#tabster li{
+	float: left;
+	cursor: pointer;
+	width: 16.665%;
+}
+
+#tabster li a {
+	color:white;
+	background-color: black;
+	box-sizing: border-box;
+	display: block;
+	width: 100%;
+	float: left;
+	text-align: center;
+	padding: 30px;
+	border: 1px solid rgba(0,0,0, 0.1);
+}
+
+#tabster .box{
+	overflow-x: hidden;
+	overflow-y: scroll;
+	box-sizing: border-box;
+	height: 100%;
+	width: 100%;
+	background-color: rgba(0,0,0,0.1);
+	color: black;
+	padding: 30px;
+	float: left;
+	display: none;
+	
+	/* [1/1 auto height with minimum height] [coment out responsive fixed ratio]*/
+	min-height: 300px; 
+}
+
+#tabster .tabActive{
+	background-color: rgba(0,0,0,0.1);
+	color: black;
+	border-bottom: rgba(0,0,0,0) 1px solid;
+}
+
+#tabster #contentOuterWraper{
+	display: block;
+	overflow: hidden;
+	position: relative;
+	width: 100%;
+	/* [1/2 responsive fixed ratio] */
+	/*padding-bottom: 30%;*/
+}
+
+#tabster #contentInerWraper{
+	/* [2/2 responsive fixed ratio] */
+    /*	position: absolute;
+	top: 0px;
+	left: 0px;
+	right: 0px;
+	bottom: 0px;*/
+}
